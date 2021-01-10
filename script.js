@@ -1,16 +1,15 @@
 $(document).ready(function() {
 
     // Variables
-    var timeBlock = $(".time-block")
     var am9 = $("#9");
     var am10 = $("#10");
     var am11 = $("#11");
     var pm12 = $("#12");
-    var pm1 = $("#20");
-    var pm2 = $("#21");
-    var pm3 = $("#22");
-    var pm4 = $("#23");
-    var pm5 = $("#24");
+    var pm1 = $("#13");
+    var pm2 = $("#14");
+    var pm3 = $("#15");
+    var pm4 = $("#16");
+    var pm5 = $("#17");
     var saveBtn = $(".saveBtn");
     var hour = moment().hour();
     
@@ -23,25 +22,33 @@ $(document).ready(function() {
     dateDisplay.text(date);
 
     // Function to change the classes of the time blocks
-    function blockChange(x) {
+    function blockChange(array) {
         
         // Variable to grab the id number to compare with the hour
-        var currentTime = x.attr("id");
+        var currentTime = array.attr("id");
 
         if (currentTime == hour) {
-            x.addClass("present");
-            x.removeClass("future");
+            array.addClass("present");
+            array.removeClass("future");
         }
         else if (currentTime > hour) {
-            x.addClass("future");
-            x.removeClass("past");
+            array.addClass("future");
+            array.removeClass("past");
         }
         else {
-            x.addClass("past");
-            x.removeClass("present");
+            array.addClass("past");
+            array.removeClass("present");
         }
     };
 
+    saveBtn.on("click", function() {
+        var description = $(this).siblings(".description").val();
+        var time = $(this).parent().attr("id");
+        localStorage.setItem(time, description);
+        console.log(time);
+    })
+    
+    
     // For loops to repeat through the function
     for (let i = 0; i < timeArr.length; i++){
         blockChange(timeArr[i]);
